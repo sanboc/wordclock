@@ -3,16 +3,16 @@ Python tkinter application which displays time using words. Allows for changing 
 
 FUNCTIONAL DESCRIPTION:
 10x10 letter "word search" format clock face. Approximates time to 5-10 minutes:
---:00 - :04 : IT'S xx O'CLOCK yy
---:05 - :09 : IT'S FIVE PAST xx yy
---:10 - :14 : IT'S TEN PAST xx yy
---:15 - :19 : IT'S QUARTER PAST xx yy
---:20 - :29 : IT'S TWENTY PAST xx yy
---:30 - :39 : IT'S HALF PAST xx yy
---:40 - :44 : IT'S TWENTY TIL zz yy
---:45 - :49 : IT'S QUARTER TIL zz yy
---:50 - :54 : IT'S TEN TIL zz yy
---:55 - :59 : IT'S FIVE TIL zz yy
+	:00 - :04 : IT'S xx O'CLOCK yy
+	:05 - :09 : IT'S FIVE PAST xx yy
+	:10 - :14 : IT'S TEN PAST xx yy
+	:15 - :19 : IT'S QUARTER PAST xx yy
+	:20 - :29 : IT'S TWENTY PAST xx yy
+	:30 - :39 : IT'S HALF PAST xx yy
+	:40 - :44 : IT'S TWENTY TIL zz yy
+	:45 - :49 : IT'S QUARTER TIL zz yy
+	:50 - :54 : IT'S TEN TIL zz yy
+	:55 - :59 : IT'S FIVE TIL zz yy
 
 Where xx = current hour, yy = AM/PM, and zz = next hour. MIDNIGHT and NOON are used in place of TWELVE AM and TWELVE PM.
 
