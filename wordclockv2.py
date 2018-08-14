@@ -83,25 +83,32 @@ class Word:
     # The tkinter app is updated after each new color is set, and a delay is applied, to provide the visual fade.
     def fade_to_white(self, color, minutes=0):
         i = 1
-        while not self.active:  # Only run if the word is off. If the word is already on, do not run again.
+        while not self.active:  # Only run if the word is off. If the word is on, do not run.
             if color[0] == "F":  # Red is a component
                 red = (int("040000", 16) * i) + int("330000", 16)
             elif color[0] == "A":  # Red is a component, and dimming is active
                 red = (int("020000", 16) * i) + int("330000", 16)
-            else:
+            elif color[0] == "0":  # Red is not a component
                 red = int("330000", 16) - (int("010000", 16) * i)
+            else:  # the clock is off
+                red = int("330000", 16)
             if color[2] == "F":  # Green is a component
                 green = (int("000400", 16) * i) + int("003300", 16)
             elif color[2] == "A":  # Green is a component and dimming is active
                 green = (int("000200", 16) * i) + int("003300", 16)
-            else:
+            elif color[2] == "0":  # Green is not a component
                 green = int("003300", 16) - (int("000100", 16) * i)
+            else:  # Clock is off
+                green = int("003300", 16)
             if color[4] == "F":  # Blue is a component
                 blue = (int("000004", 16) * i) + int("000033", 16)
             elif color[4] == "A":  # Blue is a component, and dimming is active
                 blue = (int("000002", 16) * i) + int("000033", 16)
-            else:
+            elif color[4] == "0":  # Blue is not a component
                 blue = int("000033", 16) - (int("000001", 16) * i)
+            else:  # Clock is off
+                blue = int("000033", 16)
+                i = 51
             newcolorhex = hex(red+green+blue)  # Combine all newly calculated RBG values into new hex code.
             if len(newcolorhex) == 8:  # Concatenate string together, with appropriate leading zeros as needed.
                 finalcolorhex = "#" + newcolorhex[2:8]
@@ -110,7 +117,7 @@ class Word:
             elif len(newcolorhex) == 6:
                 finalcolorhex = "#00" + newcolorhex[2:6]
             else:
-                finalcolorhex = "#FFFFFF"
+                finalcolorhex = "#333333"
             self.letter1.setColor(finalcolorhex)
             self.letter1.setActive(True)
             self.letter2.setColor(finalcolorhex)
@@ -149,20 +156,27 @@ class Word:
                 red = int("FF0000", 16) - (int("040000", 16) * i)
             elif color[0] == "A":  # Red is a component and dimming is active
                 red = int("AA0000", 16) - (int("020000", 16) * i)
-            else:
+            elif color[0] == "0":  # Red is not a component
                 red = (int("010000", 16) * i) + int("000000", 16)
+            else:  # Clock is off
+                red = int("330000", 16)
             if color[2] == "F":  # Green is a component
                 green = int("00FF00", 16) - (int("000400", 16) * i)
             elif color[2] == "A":  # Green is a component and dimming is active
                 green = int("00AA00", 16) - (int("000200", 16) * i)
-            else:
+            elif color[2] == "0":  # Green is not a component
                 green = (int("000100", 16) * i) + int("000000", 16)
+            else:  # Clock is off
+                green = int("003300", 16)
             if color[4] == "F":  # Blue is a component
                 blue = int("0000FF", 16) - (int("000004", 16) * i)
             elif color[4] == "A":  # Blue is a component and dimming is active
                 blue = int("0000AA", 16) - (int("000002", 16) * i)
-            else:
+            elif color[4] == "0":  # Blue is not a component
                 blue = (int("000001", 16) * i) + int("000000", 16)
+            else:  # Clock is off
+                blue = int("000033", 16)
+                i = 51
             newcolorhex = hex(red+green+blue)  # Combine all newly calculated RBG values into new hex code.
             if len(newcolorhex) == 8:  # Concatenate string together, with appropriate leading zeros as needed.
                 finalcolorhex = "#" + newcolorhex[2:8]
@@ -404,15 +418,15 @@ class Application(Frame):
                              Letter(self.CanvasBG, text="H", column=6, row=8),
                              Letter(self.CanvasBG, text="T", column=7, row=8),
                              Letter(self.CanvasBG, text="B", column=8, row=8),
-                             Letter(self.CanvasBG, text="A", column=9, row=8)))
+                             Letter(self.CanvasBG, text="J", column=9, row=8)))
         self.Letters.append((Letter(self.CanvasBG, text="O'", column=0, row=9),
                              Letter(self.CanvasBG, text="C", column=1, row=9),
                              Letter(self.CanvasBG, text="L", column=2, row=9),
                              Letter(self.CanvasBG, text="O", column=3, row=9),
                              Letter(self.CanvasBG, text="C", column=4, row=9),
                              Letter(self.CanvasBG, text="K", column=5, row=9),
-                             Letter(self.CanvasBG, text="D", column=6, row=9),
-                             Letter(self.CanvasBG, text="J", column=7, row=9),
+                             Letter(self.CanvasBG, text="A", column=6, row=9),
+                             Letter(self.CanvasBG, text="M", column=7, row=9),
                              Letter(self.CanvasBG, text="P", column=8, row=9),
                              Letter(self.CanvasBG, text="M", column=9, row=9)))
 
@@ -472,7 +486,7 @@ class Application(Frame):
         self.wordOCLOCK = Word(self.Letters[9][0], self.Letters[9][1], self.Letters[9][2], self.Letters[9][3],
                                self.Letters[9][4], self.Letters[9][5], master=self.master)
         self.wordPM = Word(self.Letters[9][8], self.Letters[9][9], master=self.master)
-        self.wordAM = Word(self.Letters[8][9], self.Letters[9][9], master=self.master)
+        self.wordAM = Word(self.Letters[9][6], self.Letters[9][7], master=self.master)
 
         # Hours is the array of HStatement instances. There are two exceptions, MIDNIGHT and NOON, which were one word
         # each and as such did not require a full HStatement instance. These have been added to the array in a
@@ -527,7 +541,7 @@ class Application(Frame):
     def adjustMinutes(self, minutes):
         return int(minutes / 5)
 
-    # adjustHours takwes the actual hour and minutes value, and modifies it to the correct index needed for the Hours
+    # adjustHours takes the actual hour and minutes value, and modifies it to the correct index needed for the Hours
     # array. The next hour is called when the clock read :40 or higher, because at that point the minute statement will
     # be reading "ITS TWENTY TIL" or less.
     def adjustHours(self, hour, minutes):
@@ -642,6 +656,7 @@ def main():
     app = Application(master=root)
     app.updatetime()
     root.mainloop()
+
 
 # run it!
 main()
